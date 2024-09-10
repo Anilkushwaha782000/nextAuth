@@ -60,7 +60,7 @@ export default function Home() {
             Ready to boost your team's productivity?
           </h3>
           <Link
-            href="/get-started"
+            href="/homepage"
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
           >
             Start Now
