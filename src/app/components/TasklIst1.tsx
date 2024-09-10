@@ -46,13 +46,13 @@ const TaskList = () => {
         setEditTask(null);
     };
     return (
-        <div className="p-6 bg-gray-100 min-h-screen max-w-screen mx-auto">
+        <div className="p-6 bg-gray-100 min-h-96 max-w-screen mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-gray-800">Task List</h2>
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-96 overflow-auto">
                 {tasks && tasks.length===0 ?(<p className="text-center text-gray-500">Task list is empty. Continue to add tasks.</p>):(
                     <ul className="space-y-4">
                     {tasks.map((task) => (
-                        <li key={task.id} className="relative bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out list-none">
+                        <li key={task.id} className="relative bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out list-none mb-4">
                             <div className="flex gap-4 absolute top-2 right-2">
                                 <button
                                     onClick={() => handleDeleteTask(task.id)}
