@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import {
   FaTasks,
   FaUsers,
@@ -10,10 +11,24 @@ import {
 } from "react-icons/fa";
 import { useSession } from 'next-auth/react';
 import { listenToTasks,deleteTask } from "../utils/taskService";
+import KanbanBoard from "./KanbanBoard";
+
+interface User {
+  id: string;
+  username: string;
+  role: string;
+  email:string;
+  shortId: string;
+}
 const Dashboard = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
+  const [users, setUsers] = useState<User[]>([]);
+  const [activeTab,setActiveTab]=useState("tasklist");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const getCompletedTask = (): number => {
     const completedTaskCount = tasks.filter((item) => item.completed).length;
     return completedTaskCount;
@@ -26,11 +41,47 @@ const Dashboard = () => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);
     });
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/getuser');
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        const data = await response.json();
+        setUsers(data) 
+      } catch (error:any) {
+        setError(error.message);
+        console.error('Error fetching user:', error);
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
   const handleDelete=async(id:string)=>{
     await deleteTask(id);
   }
-  console.log("taks>>",tasks)
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedShortId = event.target.value;
+    if (selectedShortId) {
+      router.push(`/users/${selectedShortId}`);
+    }
+  };
+
+  if (loading) {
+    return <p>Loading users...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
   return (
     <div className="flex bg-gray-100">
       <div className="flex flex-col flex-1 overflow-hidden">
@@ -65,13 +116,47 @@ const Dashboard = () => {
               <p className="text-2xl font-bold">{getInCompletedTask()}</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow-md">
-              <h2 className="text-lg font-semibold mb-2">Team Members</h2>
-              <p className="text-2xl font-bold">12</p>
+              <h2 className="text-lg font-semibold mb-2">Team Member</h2>
+              <p className="text-2xl font-bold">{users && users.length}</p>
             </div>
           </div>
-
-          <h2 className="text-xl font-semibold mb-4 underline">Task List</h2>
-          <section className="mb-6 max-h-80 overflow-auto">
+        </main>
+        <div className="flex space-x-4 mb-6 border-b">
+        <button
+          onClick={() => handleTabClick('tasklist')}
+          className={`py-2 px-4 ${
+            activeTab === 'tasklist'
+              ? 'border-b-2 border-blue-500 text-blue-500 font-semibold'
+              : 'text-gray-500'
+          }`}
+        >
+          Task List
+        </button>
+        <button
+          onClick={() => handleTabClick('kanbanboard')}
+          className={`py-2 px-4 ${
+            activeTab === 'kanbanboard'
+              ? 'border-b-2 border-blue-500 text-blue-500 font-semibold'
+              : 'text-gray-500'
+          }`}
+        >
+          Kanban Board
+        </button>
+        <button
+          onClick={() => handleTabClick('teammember')}
+          className={`py-2 px-4 ${
+            activeTab === 'teammember'
+              ? 'border-b-2 border-blue-500 text-blue-500 font-semibold'
+              : 'text-gray-500'
+          }`}
+        >
+          Team Member
+        </button>
+        </div>
+        <div className="mt-4">
+        {activeTab === 'tasklist' && (
+          <div>
+            <section className="mb-6 max-h-72 overflow-auto">
             {tasks.length > 0 ? (
               tasks.map((item) => (
                 <div
@@ -94,10 +179,40 @@ const Dashboard = () => {
                 </div>
               ))
             ) : (
-              <></>
+              <>
+              
+              </>
             )}
           </section>
-        </main>
+          </div>
+        )}
+        {activeTab === 'kanbanboard' && (
+          <div>
+            <KanbanBoard tasks={tasks}/>
+          </div>
+        )}
+        {activeTab === 'teammember' && (
+          <div className="max-w-md mx-auto p-4">
+          <label className="block text-lg font-medium text-gray-700 mb-2">
+            Select a Team Member:
+          </label>
+          <select
+            className="block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleSelectChange}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              -- Select a User --
+            </option>
+            {users.map((user) => (
+              <option key={user.shortId} value={user.shortId}>
+                {user.username} - {user.email}
+              </option>
+            ))}
+          </select>
+        </div>
+        )}
+      </div>
       </div>
     </div>
   );

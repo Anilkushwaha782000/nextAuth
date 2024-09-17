@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import Link from 'next/link'
 function About() {
     return (
         <div>
@@ -18,12 +19,14 @@ function About() {
                             description:
                                 'Assign tasks to team members and track progress in real-time.',
                             icon: '👥',
+                            linkTo:'/task',
                         },
                         {
                             title: 'Detailed Analytics',
                             description:
                                 'Get insights into team performance and task completion rates.',
                             icon: '📊',
+                            linkTo:'/managementTaskPage',
                         },
                     ].map((feature, index) => (
                         <div
@@ -33,6 +36,11 @@ function About() {
                             <div className="text-5xl mb-4">{feature.icon}</div>
                             <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                             <p className="text-gray-600">{feature.description}</p>
+                            {feature.linkTo && (
+                                <Link href={feature.linkTo} className="text-blue-600 hover:underline mt-4 inline-block">
+                                    Check here
+                                </Link>
+                            )}
                         </div>
                     ))}
                 </div>

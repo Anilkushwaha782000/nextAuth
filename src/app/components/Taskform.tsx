@@ -1,16 +1,43 @@
 // TaskForm.tsx
-import { useState, FormEvent } from 'react';
+"use client"
+import { useState, FormEvent,useEffect } from 'react';
 import { createTask } from '../utils/taskService'; 
-
+interface User {
+  id: string;
+  username: string;
+  role: string;
+  email:string;
+  shortId: string;
+}
 const TaskForm = () => {
- 
+  const [users, setUsers] = useState<User[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [assignedTo, setAssignedTo] = useState('');
-  const [priority, setPriority] = useState('');
+  const [priority, setPriority] = useState("")
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/getuser');
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        const data = await response.json();
+        setUsers(data) 
+      } catch (error:any) {
+        setError(error.message);
+        console.error('Error fetching user:', error);
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
@@ -18,7 +45,7 @@ const TaskForm = () => {
 
     try {
       
-      await createTask({ title, description,assignedTo });
+      await createTask({ title, description,assignedTo,priority });
       setSuccess('Task created successfully!')
       setTimeout(()=>{
         setSuccess(null)
@@ -50,14 +77,20 @@ const TaskForm = () => {
     </div>
     <div>
       <label htmlFor="title" className="block text-sm font-medium text-gray-700">Assigned to</label>
-      <input
-        type="text"
-        value={assignedTo}
-        onChange={(e) => setAssignedTo(e.target.value)}
-        placeholder="Assign to"
-        required
-        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
+      <select
+            className="block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setAssignedTo(e.target.value)}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              -- Select a User --
+            </option>
+            {users.map((user) => (
+              <option key={user.shortId} value={user.email}>
+                 {user.username}
+              </option>
+            ))}
+          </select>
     </div>
     <div>
       <label htmlFor="title" className="block text-sm font-medium text-gray-700">Priority</label>

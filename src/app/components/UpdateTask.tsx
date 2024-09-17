@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getDatabase, ref, update } from 'firebase/database'; // Import Firebase functions
+import { getDatabase, ref, update } from 'firebase/database'; 
 
 type Task = {
   id: string;
@@ -7,6 +7,7 @@ type Task = {
   description: string;
   assignedTo?: string;
   completed: boolean;
+  comment?:string;
 };
 
 type UpdateTaskFormProps = {

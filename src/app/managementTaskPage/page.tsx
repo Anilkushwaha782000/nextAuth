@@ -9,6 +9,7 @@ import { MdDashboard } from 'react-icons/md'
 import { FiSettings } from 'react-icons/fi'; 
 import { AiOutlineUser } from 'react-icons/ai'
 import { FiLogOut } from 'react-icons/fi'
+import Dashboard from '../components/Dashboard';
 function Homepage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -19,7 +20,7 @@ function Homepage() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Redirect to login if not authenticated
+
   if (status === 'loading') return <p>Loading...</p>;
   if (!session) {
     router.push('/login');
@@ -30,9 +31,9 @@ function Homepage() {
       case 'todo':
         return <TaskList />;
       case 'dashboard':
-        return <div>Dashboard Content</div>;
+        return <Dashboard/>;
       case 'setting':
-        return <div>Setting Content</div>;
+        return <h1>Setting page</h1>;
       default:
         return <div>Select a tab to view content</div>;
     }

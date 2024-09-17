@@ -1,6 +1,8 @@
 import connectToDatabase from "../../utils/databaseconnection";
 import User from "../../models/user";
 import bcrypt from 'bcryptjs';
+import {customAlphabet} from 'nanoid'
+const nanoid2 = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 8);
 export async function POST(req) {
     await connectToDatabase(); 
   
@@ -16,12 +18,11 @@ export async function POST(req) {
       }
   
       const hashedPassword = await bcrypt.hash(password, 10);
-  
-      
       const newUser = new User({
         username,
         email,
         password: hashedPassword,
+        shortId:nanoid2(8),
       });
   
       await newUser.save();

@@ -19,7 +19,7 @@ export default function Home() {
             Stay organized, assign tasks, and track progress with your team in real-time.
           </p>
           <Link
-            href="/homepage"
+            href="/managementTaskPage"
             className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100 transition"
           >
             Get Started
@@ -60,7 +60,7 @@ export default function Home() {
             Ready to boost your team's productivity?
           </h3>
           <Link
-            href="/homepage"
+            href="/task"
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
           >
             Start Now

@@ -5,7 +5,7 @@ const MONGODB_URI = process.env.MONGO_DB_URI || 'mongodb://localhost:27017/yourD
 let isConnected = false;
 
 async function connectToDatabase() {
-  if (isConnected) {
+  if(isConnected) {
     console.log('Using existing MongoDB connection');
     return;
   }

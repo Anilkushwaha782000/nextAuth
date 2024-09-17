@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 const UserProfileMenu = () => {
     const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,6 @@ const UserProfileMenu = () => {
     await signOut();
     router.push('/login'); 
   };
-
   if (!session?.user) return null; 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">

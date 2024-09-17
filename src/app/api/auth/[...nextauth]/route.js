@@ -30,8 +30,6 @@ const  handler=NextAuth({
         if (!user) {
           throw new Error('No user found with this email');
         }
-
-        console.log("user>>",user)
         const isValidPassword = await bcrypt.compare(credentials.password, user.password); 
         if (!isValidPassword) {
           throw new Error('Invalid credentials');
@@ -46,12 +44,12 @@ const  handler=NextAuth({
    callbacks:{
     async jwt({ token, user }) {
       if (user) {
-        console.log("inside token>>",user)
+        // console.log("inside token>>",user)
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
       }
-      console.log("token>>",token)
+      // console.log("token>>",token)
       return token;
     },
     async session({ session, token }) {
@@ -62,6 +60,30 @@ const  handler=NextAuth({
       }
       return session;
     },
+    async signIn({user,account,profile,email,credentials}){
+      try {
+        await connectToDatabase();
+        const user = await User.findOne({ email: profile.email });
+        const hashedPassword = await bcrypt.hash(account.provider, 10);
+        if(!user){
+          try {
+            const newUser = new User({
+              username:profile.name,
+              email:profile.email,
+              password: hashedPassword,
+            });
+        
+            await newUser.save();
+            
+          } catch (error) {
+            console.log("Some error occurred while connecting to database",error)
+          }
+        }
+      } catch (error) {
+        console.log("Some error occurred while connecting to database",error)
+      }
+      return true;
+    }
    },
    session: {
     strategy: 'jwt',
