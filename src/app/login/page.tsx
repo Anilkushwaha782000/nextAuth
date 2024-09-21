@@ -2,37 +2,42 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
+interface userdata {
+  email: string;
+  password: string;
+}
 function login() {
   const [email, setEmail] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const[data,setData]=useState('')
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { data: session, status } = useSession();
   if (status === 'loading') {
     return <p>Loading...</p>;
   }
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true)
-    const result = await signIn('credentials', {
+    const response = await signIn('credentials', {
       redirect: false,
-      email,
-      password,
+      email: email,
+      password: password,
     });
     setLoading(false)
-    if (result?.error) {
-      setError(result.error);
+
+    if (response?.error) {
+      console.error('Login failed:', response.error);
+    } else if (response?.ok) {
+      // Redirect or update UI after successful login
+      console.log('Login successful:', response);
+      router.push('/profile'); // Example: redirect to profile page
     }
   };
-  if (session?.user) {
-    setTimeout(()=>{
-      router.push('/')
-    },1000)
-  }
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">

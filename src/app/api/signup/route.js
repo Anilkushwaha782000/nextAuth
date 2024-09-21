@@ -7,8 +7,12 @@ export async function POST(req) {
     await connectToDatabase(); 
   
     try {
+      const allUser=await User.updateMany(
+        { role: { $exists: false } }, 
+        { $set: { role: 'user' } }    
+      );
       const { username, email, password } = await req.json();
-
+      
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return new Response(JSON.stringify({ error: 'User already exists' }), {

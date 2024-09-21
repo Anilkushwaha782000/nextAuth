@@ -25,7 +25,6 @@ function Page() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true)
-    console.log('Form data:', formData);
     try {
       const res = await fetch('/api/signup', {
         method: 'POST',
@@ -114,7 +113,7 @@ function Page() {
         </div>
         </form>
         {message && (
-          <p className="mt-4 text-center text-red-600">
+          <p className="mt-4 text-center text-blue-900">
             {message}
           </p>)}
       </div>

@@ -22,9 +22,6 @@ function Homepage() {
 
 
   if (status === 'loading') return <p>Loading...</p>;
-  if (!session) {
-    router.push('/login');
-  }
 
   const renderContent = () => {
     switch (activeTab) {

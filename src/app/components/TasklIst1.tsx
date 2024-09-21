@@ -4,6 +4,7 @@ import { handleToggleComplete } from "../utils/taskService";
 import { deleteTask } from "../utils/taskService";
 import UpdateTaskForm from "./UpdateTask";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 export type Task = {
   id: string;
@@ -19,6 +20,8 @@ const TaskList = () => {
   const [editTask, setEditTask] = useState<Task | null>(null);
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
   const [isToggled, setIsToggled] = useState(false);
+  const { data: session, status } = useSession();
+  const isAdmin = session?.user?.role === 'admin';
   useEffect(() => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);
@@ -63,34 +66,36 @@ const TaskList = () => {
                 key={task.id}
                 className="relative bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out list-none mb-4"
               >
-                <div className="flex gap-4 absolute top-2 right-2">
-                  <button
-                    onClick={() => handleDeleteTask(task.id)}
-                    className="text-red-400 hover:text-red-600 transition-colors duration-200 flex items-center gap-1"
-                    aria-label="Delete Task"
-                  > 
-                    <FaTrash className="block md:hidden" />
-                    <span className="hidden md:block">Delete</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleEditClick(task)}
-                    className="text-blue-500 hover:text-blue-600 transition-colors duration-200 flex items-center gap-1"
-                    aria-label="Edit Task"
-                  >
-                    <FaPencilAlt className="block md:hidden" />
-                    <span className="hidden md:block">Edit</span>
-                  </button>
-                </div>
+            {isAdmin && (
+                     <div className="flex gap-4 absolute top-2 right-2">
+                     <button
+                       onClick={() => handleDeleteTask(task.id)}
+                       className="text-red-400 hover:text-red-600 transition-colors duration-200 flex items-center gap-1"
+                       aria-label="Delete Task"
+                     > 
+                       <FaTrash className="block md:hidden" />
+                       <span className="hidden md:block">Delete</span>
+                     </button>
+   
+                     <button
+                       onClick={() => handleEditClick(task)}
+                       className="text-blue-500 hover:text-blue-600 transition-colors duration-200 flex items-center gap-1"
+                       aria-label="Edit Task"
+                     >
+                       <FaPencilAlt className="block md:hidden" />
+                       <span className="hidden md:block">Edit</span>
+                     </button>
+                   </div>
+            )}
 
                 <div
                   className="flex flex-row gap-2"
                   onClick={() => toggleExpand(task.id)}
                 >
                   {isToggled ? (
-                    <FaChevronDown className="h-6 w-6 text-gray-500" />
+                    <FaChevronDown className="h-4 w-4 text-gray-400 text-sm" />
                   ) : (
-                    <FaChevronUp className="h-6 w-6 text-gray-600" />
+                    <FaChevronUp className="h-4 w-4 text-gray-400 text-sm" />
                   )}
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     {task.title}
