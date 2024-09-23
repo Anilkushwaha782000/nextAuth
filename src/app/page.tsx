@@ -19,7 +19,7 @@ export default function Home() {
             Stay organized, assign tasks, and track progress with your team in real-time.
           </p>
           <Link
-            href="/managementTaskPage"
+            href="/onboarding"
             className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100 transition"
           >
             Get Started
@@ -27,7 +27,49 @@ export default function Home() {
         </div>
       </section>
 
-      
+            {/* Key Features Section */}
+            <section className="py-12 bg-white">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-semibold text-center mb-8">
+            Why Choose TaskFlow?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="p-6 border rounded-lg text-center hover:shadow-lg transition duration-300">
+              <div className="text-indigo-600 text-6xl mb-4">
+                🧑‍🤝‍🧑
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Collaborate Easily</h3>
+              <p className="text-gray-600">
+                Share tasks with your team and work together in real-time. 
+                Manage assignments and stay in sync.
+              </p>
+            </div>
+            {/* Feature 2 */}
+            <div className="p-6 border rounded-lg text-center hover:shadow-lg transition duration-300">
+              <div className="text-indigo-600 text-6xl mb-4">
+                📆
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Stay Organized</h3>
+              <p className="text-gray-600">
+                Use our intuitive Kanban board to manage your tasks with ease, 
+                move tasks between stages effortlessly.
+              </p>
+            </div>
+            {/* Feature 3 */}
+            <div className="p-6 border rounded-lg text-center hover:shadow-lg transition duration-300">
+              <div className="text-indigo-600 text-6xl mb-4">
+                🔔
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Real-time Notifications</h3>
+              <p className="text-gray-600">
+                Receive instant notifications about task updates, deadlines, 
+                and comments to stay on top of your work.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="py-20">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl sm:text-3xl font-semibold mb-8">Features</h3>
@@ -53,7 +95,19 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <section className="bg-indigo-600 text-white py-12">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl font-semibold mb-4">Start Collaborating Today</h2>
+          <p className="text-lg mb-6">
+            TaskFlow is the perfect tool for teams looking to boost productivity and stay organized.
+          </p>
+          <Link href="/signup">
+            <p className="px-8 py-4 bg-white text-indigo-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100 transition duration-300">
+              Sign Up for Free
+            </p>
+          </Link>
+        </div>
+      </section>
       <section className="bg-gray-100 py-12">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-xl sm:text-2xl font-semibold mb-4">

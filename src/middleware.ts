@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt';
 export async function middleware(request: NextRequest) {
 const path=request.nextUrl.pathname;
-const isPublicPath= path==='/login'||path==='/signup'
+const isPublicPath= path==='/login'||path==='/signup'||path==='/onboarding'
 const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET! });
 if(isPublicPath && token){
     return NextResponse.redirect(new URL('/profile', request.url))
@@ -15,5 +15,5 @@ if(!isPublicPath && !token){
  
 
 export const config = {
-  matcher: ['/task','/managementTaskPage','/profile','/login','/signup','/users/:path*'],
+  matcher: ['/task','/managementTaskPage','/profile','/login','/signup','/users/:path*','/dashboard','/onboarding'],
 }

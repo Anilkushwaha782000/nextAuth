@@ -103,7 +103,7 @@ const TaskList = () => {
                 </div>
                 {expandedTaskId === task.id && (
                   <div className="transition-all duration-300 ease-in-out">
-                    <p className="text-gray-700 mb-2">{task.description}</p>
+                    <p className="text-gray-700 text-xs md:text-sm mb-2">{task.description}</p>
                     <div className="gap-4 flex">
                       <span
                         className={`text-lg ${
@@ -113,9 +113,12 @@ const TaskList = () => {
                         }`}
                       >
                         {task.assignedTo && (
-                          <span className="text-sm text-gray-700">
+                         <div className="flex flex-row items-center justify-center gap-1">
+                          <img src={task?.imageUrl} alt="Avatar" className="w-8 h-8 rounded-full "/>
+                           <span className="text-xs md:text-sm text-gray-700">
                             Assigned to: {task.assignedTo}
                           </span>
+                         </div>
                         )}
                       </span>
                       <button

@@ -77,9 +77,9 @@ function About() {
                 <p className="max-w-md mx-auto mb-8">
                     Join thousands of teams using our task management tool to boost their productivity.
                 </p>
-                <button className="bg-white text-blue-600 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition">
+                <Link href={'/onboarding'} className="bg-white text-blue-600 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition">
                     Start Your Free Trial
-                </button>
+                </Link>
             </section>
         </div>
     )

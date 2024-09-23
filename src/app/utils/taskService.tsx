@@ -15,7 +15,7 @@ type Task = {
     assignedTo?:string;
     priority?:string;
   }
-export const createTask = async (task: { title: string; description: string,assignedTo: string,priority:string}) => {
+export const createTask = async (task: { title: string; description: string,assignedTo: string,priority:string,imageUrl:string}) => {
   const taskRef = push(ref(database, 'tasks/'));
   // const newTaskRef = ref(database, 'tasks/' + Date.now());
   await set(taskRef, {

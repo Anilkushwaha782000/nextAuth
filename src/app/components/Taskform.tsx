@@ -2,6 +2,7 @@
 "use client"
 import { useState, FormEvent,useEffect } from 'react';
 import { createTask } from '../utils/taskService'; 
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 interface User {
   id: string;
   username: string;
@@ -18,6 +19,7 @@ const TaskForm = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [assignedTo, setAssignedTo] = useState('');
   const [priority, setPriority] = useState("")
+  const [image, setImage] = useState<File | null>(null);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -38,14 +40,34 @@ const TaskForm = () => {
 
     fetchUser();
   }, []);
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(event.target.files[0]);
+    }
+  };
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    let imageUrl=''
+    if (image) {
+      // Upload the image to Firebase Storage
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${image.name}`);
 
+      try {
+        await uploadBytes(storageRef, image);
+        imageUrl = await getDownloadURL(storageRef);
+        console.log("ImageUrl>>",imageUrl) 
+      } catch (err) {
+        setError('Failed to upload image. Please try again.');
+        setLoading(false);
+        return;
+      }
+    }
     try {
       
-      await createTask({ title, description,assignedTo,priority });
+      await createTask({ title, description,assignedTo,priority,imageUrl });
       setSuccess('Task created successfully!')
       setTimeout(()=>{
         setSuccess(null)
@@ -114,6 +136,16 @@ const TaskForm = () => {
         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
     </div>
+    <div>
+          <label htmlFor="image" className="block text-sm font-medium text-gray-700">Upload Image</label>
+          <input
+            type="file"
+            id="image"
+            onChange={handleImageChange}
+            accept="image/*" 
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+          />
+        </div>
 
     <button
       type="submit"

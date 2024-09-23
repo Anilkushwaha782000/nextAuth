@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
+import { FaGithub,FaGoogle } from 'react-icons/fa';
 interface userdata {
   email: string;
   password: string;
@@ -83,15 +84,15 @@ function login() {
         <div className="mt-6 flex gap-4">
           <button
             onClick={() => signIn('github')}
-            className="w-full py-2 px-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="w-full py-2 px-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 gap-2 flex items-center justify-center"
           >
-            Sign in with GitHub
+            <FaGithub size={24}/> GitHub
           </button>
           <button
             onClick={() => signIn('google')}
-            className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 gap-2 flex items-center justify-center"
           >
-            Sign in with Google
+            <FaGoogle size={24}/>Google
           </button>
         </div>
         <div className="mt-4 text-center">
