@@ -65,6 +65,8 @@ function About() {
                                 src={member.img}
                                 alt={member.name}
                                 className="w-24 h-24 mx-auto rounded-full mb-4"
+                                width={24}
+                                height={24}
                             />
                             <h3 className="text-xl font-semibold">{member.name}</h3>
                             <p className="text-gray-500">{member.role}</p>

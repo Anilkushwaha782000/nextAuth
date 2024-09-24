@@ -33,9 +33,6 @@ const Dashboard = () => {
   const [filteredTasks, setFilteredTasks] = useState<any[]>([]); 
   const [searchQuery, setSearchQuery] = useState("");
   const isAdmin = session?.user?.role === "admin";
-  if (status === "loading") {
-    return <Loader />;
-  }
   useEffect(() => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);
@@ -59,6 +56,9 @@ const Dashboard = () => {
 
     fetchUser();
   }, []);
+  if (status === "loading") {
+    return <Loader />;
+  }
   const getCompletedTask = (): number => {
     const completedTaskCount = tasks.filter((item) => item.completed).length;
     return completedTaskCount;
@@ -118,6 +118,8 @@ const Dashboard = () => {
             <Image
               src={session?.user?.image || "/default-profile.png"}
               alt="User"
+              width={10}
+              height={10}
               className="w-8 h-8 rounded-full"
             />
           </div>
@@ -208,7 +210,7 @@ const Dashboard = () => {
                             {item.title}
                           </h3>
                          <div className="flex flex-row gap-1 items-center justify-center">
-                          <Image src={item?.imageUrl} alt="image is not found" className="w-8 h-8 rounded-full "/>
+                          <Image src={item?.imageUrl}  height={8} width={8} alt="image is not found" className="w-8 h-8 rounded-full "/>
                          <p className="text-sm text-gray-500">
                             Assigned to {item.assignedTo}
                           </p>

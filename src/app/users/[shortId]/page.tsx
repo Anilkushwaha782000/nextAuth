@@ -88,6 +88,8 @@ const TeamMember = () => {
               className="w-24 h-24 rounded-full border-4 border-white shadow-md"
               src="/profile.jpg"
               alt="Team Member"
+              width={24}
+              height={24}
             />
             <div className="ml-6">
               <h2 className="text-2xl font-semibold text-white">

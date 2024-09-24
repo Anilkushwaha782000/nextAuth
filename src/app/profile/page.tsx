@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-function page() {
+function Page() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -20,4 +20,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

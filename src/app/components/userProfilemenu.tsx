@@ -21,6 +21,8 @@ const UserProfileMenu = () => {
           src={ "/default-profile.png"}
           alt="Profile"
           className="w-24 h-24 rounded-full border-2 border-gray-300"
+          width={24}
+          height={24}
         />
       </div>
       <form className="space-y-4">

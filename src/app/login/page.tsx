@@ -9,7 +9,7 @@ interface userdata {
   email: string;
   password: string;
 }
-function login() {
+function Login() {
   const [email, setEmail] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -107,4 +107,4 @@ function login() {
   )
 }
 
-export default login
+export default Login
