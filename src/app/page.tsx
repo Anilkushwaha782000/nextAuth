@@ -6,8 +6,6 @@ import { useSession } from 'next-auth/react';
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  // if (session) {
-  // }
   return (
    <div>
       <section className="bg-blue-600 text-white py-20">
@@ -111,7 +109,7 @@ export default function Home() {
       <section className="bg-gray-100 py-12">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-xl sm:text-2xl font-semibold mb-4">
-            Ready to boost your team's productivity?
+            Ready to boost your team&apos;s  productivity?
           </h3>
           <Link
             href="/task"

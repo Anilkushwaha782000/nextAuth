@@ -108,7 +108,7 @@ const TeamMember = () => {
             <ul className="space-y-4">
               {tasks &&
                 tasks.map((item) => (
-                  <div>
+                  <div key={item._id}>
                     <li className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">
                       <div key={item.index}>
                         <h4 className="font-medium text-gray-700">
@@ -137,7 +137,7 @@ const TeamMember = () => {
                 <p className="text-sm text-gray-600">
                   Completed the task{" "}
                   <span className="font-medium text-gray-800">
-                    "Design Homepage"
+                  &quot;Design Homepage&quot;
                   </span>{" "}
                   on Sep 18, 2024.
                 </p>
@@ -146,7 +146,7 @@ const TeamMember = () => {
                 <p className="text-sm text-gray-600">
                   Updated the task{" "}
                   <span className="font-medium text-gray-800">
-                    "Fix Header Bugs"
+                  &quot;Fix Header Bugs&quot;
                   </span>
                   .
                 </p>

@@ -13,7 +13,6 @@ function login() {
   const [email, setEmail] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const[data,setData]=useState('')
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { data: session, status } = useSession();

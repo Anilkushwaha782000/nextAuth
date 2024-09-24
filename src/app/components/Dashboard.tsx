@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { listenToTasks, deleteTask } from "../utils/taskService";
 import KanbanBoard from "./KanbanBoard";
 import Loader from "./loder";
+import Image from "next/image";
 interface User {
   id: string;
   username: string;
@@ -35,14 +36,6 @@ const Dashboard = () => {
   if (status === "loading") {
     return <Loader />;
   }
-  const getCompletedTask = (): number => {
-    const completedTaskCount = tasks.filter((item) => item.completed).length;
-    return completedTaskCount;
-  };
-  const getInCompletedTask = (): number => {
-    const completedTaskCount = tasks.filter((item) => !item.completed).length;
-    return completedTaskCount;
-  };
   useEffect(() => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);
@@ -66,9 +59,16 @@ const Dashboard = () => {
 
     fetchUser();
   }, []);
+  const getCompletedTask = (): number => {
+    const completedTaskCount = tasks.filter((item) => item.completed).length;
+    return completedTaskCount;
+  };
+  const getInCompletedTask = (): number => {
+    const completedTaskCount = tasks.filter((item) => !item.completed).length;
+    return completedTaskCount;
+  };
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value.toLowerCase();
-    console.log("query>>",query)
     setSearchQuery(query);
     if (query) {
       const filtered = tasks.filter((task) =>
@@ -115,7 +115,7 @@ const Dashboard = () => {
               onChange={handleSearch}
               className="px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <img
+            <Image
               src={session?.user?.image || "/default-profile.png"}
               alt="User"
               className="w-8 h-8 rounded-full"
@@ -208,7 +208,7 @@ const Dashboard = () => {
                             {item.title}
                           </h3>
                          <div className="flex flex-row gap-1 items-center justify-center">
-                          <img src={item?.imageUrl} className="w-8 h-8 rounded-full "/>
+                          <Image src={item?.imageUrl} alt="image is not found" className="w-8 h-8 rounded-full "/>
                          <p className="text-sm text-gray-500">
                             Assigned to {item.assignedTo}
                           </p>

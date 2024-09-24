@@ -3,6 +3,7 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 const UserProfileMenu = () => {
   const { data: session, status } = useSession();
@@ -16,7 +17,7 @@ const UserProfileMenu = () => {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold text-center mb-4">User Profile</h2>
       <div className="flex flex-col items-center mb-4">
-        <img
+        <Image
           src={ "/default-profile.png"}
           alt="Profile"
           className="w-24 h-24 rounded-full border-2 border-gray-300"

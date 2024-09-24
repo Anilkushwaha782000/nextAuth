@@ -6,6 +6,7 @@ import UpdateTaskForm from "./UpdateTask";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import Image from "next/image";
 export type Task = {
   id: string;
   title: string;
@@ -114,7 +115,7 @@ const TaskList = () => {
                       >
                         {task.assignedTo && (
                          <div className="flex flex-row items-center justify-center gap-1">
-                          <img src={task?.imageUrl} alt="Avatar" className="w-8 h-8 rounded-full "/>
+                          <Image src={task?.imageUrl} alt="Avatar" className="w-8 h-8 rounded-full "/>
                            <span className="text-xs md:text-sm text-gray-700">
                             Assigned to: {task.assignedTo}
                           </span>
