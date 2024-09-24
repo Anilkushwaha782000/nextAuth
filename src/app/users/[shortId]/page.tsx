@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { listenToTasks } from "@/app/utils/taskService";
 import { database } from "@/app/utils/firebase";
+import Image from "next/image";
 import {
   getDatabase,
   ref,
@@ -83,7 +84,7 @@ const TeamMember = () => {
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         {user && (
           <div className="flex items-center bg-blue-600 p-6">
-            <img
+            <Image
               className="w-24 h-24 rounded-full border-4 border-white shadow-md"
               src="/profile.jpg"
               alt="Team Member"
@@ -107,8 +108,8 @@ const TeamMember = () => {
             </h3>
             <ul className="space-y-4">
               {tasks &&
-                tasks.map((item) => (
-                  <div key={item._id}>
+                tasks.map((item,index) => (
+                  <div key={index}>
                     <li className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">
                       <div key={item.index}>
                         <h4 className="font-medium text-gray-700">
@@ -135,16 +136,16 @@ const TeamMember = () => {
             <ul className="space-y-4">
               <li className="bg-gray-50 p-4 rounded-lg shadow-sm">
                 <p className="text-sm text-gray-600">
-                  Completed the task{" "}
+                  Completed the task
                   <span className="font-medium text-gray-800">
                   &quot;Design Homepage&quot;
-                  </span>{" "}
+                  </span>
                   on Sep 18, 2024.
                 </p>
               </li>
               <li className="bg-gray-50 p-4 rounded-lg shadow-sm">
                 <p className="text-sm text-gray-600">
-                  Updated the task{" "}
+                  Updated the task 
                   <span className="font-medium text-gray-800">
                   &quot;Fix Header Bugs&quot;
                   </span>

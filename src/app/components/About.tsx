@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 function About() {
     return (
         <div>
@@ -60,7 +61,7 @@ function About() {
                             key={index}
                             className="text-center bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                         >
-                            <img
+                            <Image
                                 src={member.img}
                                 alt={member.name}
                                 className="w-24 h-24 mx-auto rounded-full mb-4"
