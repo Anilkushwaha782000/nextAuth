@@ -14,6 +14,7 @@ import { listenToTasks, deleteTask } from "../utils/taskService";
 import KanbanBoard from "./KanbanBoard";
 import Loader from "./loder";
 import Image from "next/image";
+import { useUser } from "../userContext";
 interface User {
   id: string;
   username: string;
@@ -22,6 +23,7 @@ interface User {
   shortId: string;
 }
 const Dashboard = () => {
+  const {role}=useUser()
   const [tasks, setTasks] = useState<any[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session, status } = useSession();
@@ -32,7 +34,7 @@ const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [filteredTasks, setFilteredTasks] = useState<any[]>([]); 
   const [searchQuery, setSearchQuery] = useState("");
-  const isAdmin = session?.user?.role === "admin";
+  const isAdmin = role === "admin";
   useEffect(() => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);

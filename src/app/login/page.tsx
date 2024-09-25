@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 import { FaGithub,FaGoogle } from 'react-icons/fa';
+import { useUser } from '../userContext';
 interface userdata {
   email: string;
   password: string;
 }
 function Login() {
+  const { role,setRole } = useUser();
   const [email, setEmail] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -33,10 +35,22 @@ function Login() {
     if (response?.error) {
       console.error('Login failed:', response.error);
     } else if (response?.ok) {
-      // Redirect or update UI after successful login
-      console.log('Login successful:', response);
-      router.push('/profile'); // Example: redirect to profile page
+      const userRole = await fetchUserRole(email);
+      setRole(userRole);
+      router.push('/profile'); 
     }
+  };
+  const fetchUserRole = async (email: string) => {
+    const response = await fetch('/api/getuserrole', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+    return data; 
   };
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
