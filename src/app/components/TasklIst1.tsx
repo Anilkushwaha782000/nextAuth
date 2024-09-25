@@ -7,6 +7,7 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import Image from "next/image";
+import { useUser } from "../userContext";
 export type Task = {
   id: string;
   title: string;
@@ -16,13 +17,14 @@ export type Task = {
   priority?: string;
 };
 const TaskList = () => {
+  const {role}=useUser()
   const [tasks, setTasks] = useState<any[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [editTask, setEditTask] = useState<Task | null>(null);
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
   const [isToggled, setIsToggled] = useState(false);
   const { data: session, status } = useSession();
-  const isAdmin = session?.user?.role === 'admin';
+  const isAdmin = role=== 'admin';
   useEffect(() => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);
