@@ -42,7 +42,7 @@ const UserProfileMenu = () => {
             type="text"
             readOnly
             className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={role}
+            value={role||"user"}
           />
         </div>
         <div className="flex flex-col">
