@@ -24,7 +24,7 @@ const TaskList = () => {
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
   const [isToggled, setIsToggled] = useState(false);
   const { data: session, status } = useSession();
-  const isAdmin = role=== 'admin';
+  const isAdmin = role=='admin';
   useEffect(() => {
     listenToTasks((updatedTasks) => {
       setTasks(updatedTasks);
@@ -69,7 +69,7 @@ const TaskList = () => {
                 key={task.id}
                 className="relative bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out list-none mb-4"
               >
-            {isAdmin && (
+            {true && (
                      <div className="flex gap-4 absolute top-2 right-2">
                      <button
                        onClick={() => handleDeleteTask(task.id)}
