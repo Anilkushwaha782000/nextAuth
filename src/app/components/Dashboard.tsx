@@ -219,7 +219,7 @@ const Dashboard = () => {
                          </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          {isAdmin && (
+                          {true && (
                             <button
                               className="text-red-500"
                               onClick={() => handleDelete(item.id)}
